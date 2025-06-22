@@ -1,0 +1,10 @@
+streamlit
+matplotlib
+pandas
+altair
+beautifulsoup4
+requests
+wordcloud
+textblob
+google-generativeai
+google-api-core
