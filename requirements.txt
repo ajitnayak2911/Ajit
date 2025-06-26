@@ -47,7 +47,6 @@ jsonschema==4.24.0
 jsonschema-specifications==2025.4.1
 kiwisolver==1.4.8
 langchain-core==0.3.66
-langchain-google-genai==2.1.5
 langsmith==0.4.1
 lxml==5.4.0
 MarkupSafe==3.0.2
