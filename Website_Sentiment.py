@@ -166,7 +166,22 @@ if st.button("Analyze"):
     sentiment_list = []
     progress = st.progress(0)
     for i, row in df.iterrows():
-        clean_text = re.sub(r"[^\w\s]", "", row["Text"].lower())
+        text = row["Text"]
+        clean_text = re.sub(r"[^\w\s]", "", text.lower())
+
+        if use_gemini and genai_enabled and i < 10:
+            try:
+                prompt = f"Classify the sentiment of this text as Positive, Negative, or Neutral:\n\n{text}"
+                response = model.generate_content(prompt)
+                label = response.text.strip().split("\n")[0]
+                if any(x in label.lower() for x in ["positive", "neutral", "negative"]):
+                    sentiment_list.append(label.title())
+                    progress.progress((i + 1) / len(df))
+                    continue
+            except Exception as e:
+                print("Gemini error:", e)
+
+        # Fallback to keyword rules and TextBlob
         for label, keywords in keyword_rules.items():
             if any(kw in clean_text for kw in keywords):
                 sentiment_list.append(label)
@@ -179,6 +194,7 @@ if st.button("Analyze"):
                 sentiment_list.append("Negative")
             else:
                 sentiment_list.append("Neutral")
+
         progress.progress((i + 1) / len(df))
 
     df["Sentiment"] = sentiment_list

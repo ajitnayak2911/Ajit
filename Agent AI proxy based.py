@@ -57,6 +57,7 @@ def solve_recaptcha(sitekey: str, page_url: str) -> str:
         The CAPTCHA solution token to inject into g-recaptcha-response
     """
     captcha_api_key = os.getenv("CAPTCHA_API_KEY")
+    print("CAPTCHA API Key:", captcha_api_key)
     if not captcha_api_key:
         raise ValueError("CAPTCHA_API_KEY not found in environment variables")
 
@@ -134,7 +135,7 @@ async def SiteValidation():
         "     - Send your API key, sitekey, and current page URL to https://2captcha.com/in.php.\n"
         "     - Poll https://2captcha.com/res.php until the token is ready (status: 1).\n"
         "   - When received, inject the solution token into the hidden textarea named 'g-recaptcha-response'.\n"
-        "   - Also set `grecaptcha.getResponse()` programmatically if needed.\n"
+        "   - Also set grecaptcha.getResponse() programmatically if needed.\n"
         "   - Confirm the CAPTCHA is solved before continuing to submit the form.\n"
         "8. Click the \"Contact us\" button to submit the form.\n"
         "9. After submission, wait for the \"Thank You\" message to appear.\n"
